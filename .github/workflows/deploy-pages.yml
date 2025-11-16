@@ -25,12 +25,13 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      # ここでは単純にリポジトリの中身を全部公開用フォルダにコピー
-      # index.md がトップページとして表示される
+      # ★ ここを修正：index.md だけを公開用ディレクトリにコピー
       - name: Build static site
         run: |
+          rm -rf _site
           mkdir -p _site
-          cp -R ./* _site/
+          # index.md をトップページにする
+          cp index.md _site/index.md
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

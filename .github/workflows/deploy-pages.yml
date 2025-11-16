@@ -3,7 +3,7 @@ name: Deploy NengaMakerWiki to GitHub Pages
 on:
   push:
     branches: [ main ]   # main に push されたら自動デプロイ
-  workflow_dispatch:      # 手動でも実行できるように
+  workflow_dispatch:      # 手動でも実行可能
 
 permissions:
   contents: read
@@ -25,13 +25,12 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      # ★ ここを修正：index.md だけを公開用ディレクトリにコピー
+      # site/ 以下をそのまま公開用ディレクトリにコピー
       - name: Build static site
         run: |
           rm -rf _site
           mkdir -p _site
-          # index.md をトップページにする
-          cp index.md _site/index.md
+          cp -R site/* _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
